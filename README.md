@@ -56,3 +56,67 @@ Constraints:
 0 <= newPriority <= 109
 At most 2 * 105 calls will be made in total to add, edit, rmv, and execTop methods.
 The input is generated such that taskId will be valid.
+
+---
+
+Today’s LeetCode POTD: Design Task Manager 📝
+We need to implement a system where tasks have:
+
+A taskId
+
+A userId
+
+A priority
+
+Operations include add, edit, remove & execute the highest-priority task.
+
+Here’s how I approached it 👇
+
+2/
+The tricky part?
+👉 Priorities keep changing (edit/remove).
+👉 We must always return the latest valid top task.
+
+A simple priority queue isn’t enough, because it will still contain old versions.
+
+3/
+💡 Idea: Use two structures
+
+HashMap → maps taskId → (userId, priority)
+
+Max-Heap (priority_queue) → stores (priority, taskId, userId)
+
+HashMap keeps the latest state. Heap gives quick access to highest priority.
+
+4/
+⚙️ Lazy Deletion Strategy:
+When executing the top task:
+
+If it was removed → skip
+
+If priority is outdated → skip
+
+Else → valid → execute & remove
+
+This avoids costly updates inside the heap ✅
+
+5/
+⏱️ Complexity:
+
+Add/Edit → O(log n) (heap push)
+
+Remove → O(1) (just erase from map)
+
+Execute Top → O(log n) amortized
+
+Efficient + clean design 💯
+
+6/
+This POTD is a mini “system design” inside DSA.
+It teaches:
+
+Combining data structures (heap + hashmap)
+
+Handling outdated info gracefully
+
+Thinking like a real-world scheduler
